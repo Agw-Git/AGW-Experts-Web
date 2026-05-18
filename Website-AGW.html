@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGW — AI-Powered Business Automation</title>
+<meta name="description" content="AGW builds powerful AI workflows, GPT automations, and intelligent websites that help businesses save time, reduce costs, and scale faster.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0071e3;
+  --blue-light: #1a8aff;
+  --blue-dark: #0057b3;
+  --blue-glow: rgba(0,113,227,0.25);
+  --purple: #7B2FFF;
+  --purple-light: #9B5FFF;
+  --purple-border: #8B3FFF;
+  --neon: #00CFFF;
+  --neon-2: #4DD9FF;
+  --neon-glow: rgba(0,207,255,0.12);
+  --dark: #000000;
+  --dark-2: #070B18;
+  --dark-3: #0C1120;
+  --dark-4: #111828;
+  --dark-5: #161E30;
+  --card: rgba(255,255,255,0.04);
+  --card-h: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-h: rgba(0,113,227,0.4);
+  --white: #FFFFFF;
+  --gray-1: #EEF1F8;
+  --gray-2: #C0C8DC;
+  --gray-3: #7B88A8;
+  --gray-4: #3A4560;
+  --font-h: 'Outfit', sans-serif;
+  --font-b: 'Space Grotesk', sans-serif;
+  --ease: cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ---- SCROLLBAR ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark-2); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+/* ---- NAV ---- */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%;
+  height: 72px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: var(--ease) 0.3s;
+}
+nav.scrolled {
+  background: rgba(7,11,24,0.95);
+  border-bottom-color: rgba(0,113,227,0.2);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+/* ---- NAV LOGO ICON UPLOAD ---- */
+.nav-logo-icon {
+  width: 42px; height: 42px;
+  background: var(--blue);
+  border: 2px solid var(--purple-border);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-logo-icon:hover .icon-upload-overlay { opacity: 1; }
+.icon-upload-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s;
+  font-size: 14px; color: white;
+  border-radius: 6px;
+}
+.nav-logo-icon img {
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 6px;
+}
+#icon-file-input { display: none; }
+.nav-logo-text { font-family: var(--font-h); font-weight: 800; font-size: 18px; letter-spacing: 0.02em; }
+.nav-logo-text span { display: block; font-size: 9px; font-weight: 600; letter-spacing: 0.2em; color: var(--gray-2); margin-top: -2px; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a {
+  color: var(--gray-2); text-decoration: none; font-size: 14px; font-weight: 500;
+  transition: color 0.2s; letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--blue); color: var(--white);
+  padding: 10px 22px; border-radius: 8px;
+  text-decoration: none; font-size: 14px; font-weight: 600;
+  transition: all 0.2s; border: 1px solid transparent;
+}
+.nav-cta:hover { background: var(--blue-light); transform: translateY(-1px); box-shadow: 0 8px 24px var(--blue-glow); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+/* ---- SECTIONS COMMON ---- */
+section { padding: 100px 5%; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,113,227,0.12);
+  border: 1px solid rgba(0,113,227,0.3);
+  border-radius: 100px;
+  padding: 6px 16px; margin-bottom: 20px;
+  font-size: 12px; font-weight: 600; color: var(--neon);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.section-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--neon); }
+.section-title {
+  font-family: var(--font-h); font-size: clamp(32px, 5vw, 54px);
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.02em;
+}
+.section-sub { font-size: 18px; color: var(--gray-2); line-height: 1.7; max-width: 600px; margin-top: 16px; }
+.text-blue { color: var(--blue-light); }
+.text-neon { color: var(--neon); }
+.text-gradient {
+  background: linear-gradient(135deg, var(--blue-light) 0%, var(--neon) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ---- BTN ---- */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue); color: var(--white);
+  padding: 14px 28px; border-radius: 10px;
+  text-decoration: none; font-size: 15px; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.25s var(--ease);
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover { background: var(--blue-light); transform: translateY(-2px); box-shadow: 0 12px 32px var(--blue-glow); }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--white);
+  padding: 14px 28px; border-radius: 10px;
+  text-decoration: none; font-size: 15px; font-weight: 600;
+  border: 1px solid var(--border-h); cursor: pointer; transition: all 0.25s var(--ease);
+}
+.btn-outline:hover { background: rgba(0,113,227,0.1); border-color: var(--blue); transform: translateY(-2px); }
+
+/* ---- HERO ---- */
+#hero {
+  min-height: 100vh; padding-top: 120px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(0,113,227,0.25) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 40% at 80% 60%, rgba(123,47,255,0.15) 0%, transparent 50%),
+              var(--dark-2);
+}
+.hero-grid-bg {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
+  background-image: linear-gradient(var(--blue) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--blue) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+}
+.hero-orb-1 { width: 500px; height: 500px; background: rgba(0,113,227,0.18); top: -100px; left: -100px; }
+.hero-orb-2 { width: 400px; height: 400px; background: rgba(123,47,255,0.12); bottom: 0; right: 5%; }
+.hero-orb-3 { width: 300px; height: 300px; background: rgba(0,207,255,0.08); top: 40%; left: 40%; }
+
+.hero-inner {
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,113,227,0.1); border: 1px solid rgba(0,113,227,0.35);
+  border-radius: 100px; padding: 8px 18px; margin-bottom: 28px;
+  font-size: 13px; font-weight: 600; color: var(--neon); letter-spacing: 0.05em;
+}
+.hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+.hero-h1 {
+  font-family: var(--font-h); font-size: clamp(40px, 6vw, 72px);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+.hero-sub { font-size: 18px; color: var(--gray-2); line-height: 1.75; margin-bottom: 36px; max-width: 520px; }
+.hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
+.hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+.hero-stat { }
+.hero-stat-num { font-family: var(--font-h); font-size: 28px; font-weight: 800; color: var(--blue-light); }
+.hero-stat-label { font-size: 12px; color: var(--gray-3); letter-spacing: 0.05em; margin-top: 2px; }
+
+/* Workflow Animation Card */
+.hero-visual {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px;
+  position: relative; overflow: hidden;
+}
+.hero-visual::before {
+  content: ''; position: absolute; inset: 0; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(0,113,227,0.06) 0%, rgba(123,47,255,0.06) 100%);
+  pointer-events: none;
+}
+.workflow-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 24px;
+}
+.wf-dot { width: 10px; height: 10px; border-radius: 50%; }
+.wf-dot.red { background: #FF5F57; }
+.wf-dot.yellow { background: #FFBD2E; }
+.wf-dot.green { background: #28CA41; }
+.wf-title { font-size: 13px; color: var(--gray-3); margin-left: 8px; font-family: monospace; }
+
+.workflow-nodes { display: flex; flex-direction: column; gap: 12px; }
+.wf-node {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 14px 16px;
+  transition: all 0.4s var(--ease);
+  animation: wfSlide 0.6s var(--ease) both;
+}
+.wf-node:nth-child(1){animation-delay:0.1s}
+.wf-node:nth-child(2){animation-delay:0.25s}
+.wf-node:nth-child(3){animation-delay:0.4s}
+.wf-node:nth-child(4){animation-delay:0.55s}
+.wf-node:nth-child(5){animation-delay:0.7s}
+@keyframes wfSlide { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+
+.wf-node.active { border-color: rgba(0,113,227,0.5); background: rgba(0,113,227,0.08); }
+.wf-node.done { border-color: rgba(40,202,65,0.3); background: rgba(40,202,65,0.05); }
+
+.wf-icon {
+  width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.wf-info { flex: 1; }
+.wf-name { font-size: 13px; font-weight: 600; }
+.wf-desc { font-size: 11px; color: var(--gray-3); margin-top: 2px; }
+.wf-status { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 100px; }
+.status-active { background: rgba(0,113,227,0.15); color: var(--blue-light); }
+.status-done { background: rgba(40,202,65,0.12); color: #28CA41; }
+.status-wait { background: rgba(255,255,255,0.06); color: var(--gray-3); }
+
+.wf-connector { display: flex; align-items: center; padding-left: 19px; }
+.wf-connector-line { width: 2px; height: 10px; background: linear-gradient(to bottom, var(--blue), transparent); border-radius: 1px; }
+
+/* ---- PROBLEMS ---- */
+#problems {
+  background: var(--dark-3);
+  position: relative; overflow: hidden;
+}
+#problems::before {
+  content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(123,47,255,0.1) 0%, transparent 70%);
+}
+.problems-inner { max-width: 1200px; margin: 0 auto; }
+.problems-header { text-align: center; margin-bottom: 64px; }
+.problems-header .section-sub { margin: 16px auto 0; }
+.problems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.problem-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px 28px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s var(--ease);
+}
+.problem-card:hover { border-color: rgba(123,47,255,0.35); transform: translateY(-4px); }
+.problem-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--purple), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.problem-card:hover::after { opacity: 1; }
+.problem-icon {
+  width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+  background: rgba(123,47,255,0.12); border: 1px solid rgba(123,47,255,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 24px;
+}
+.problem-card h3 { font-family: var(--font-h); font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { font-size: 14px; color: var(--gray-3); line-height: 1.7; }
+
+/* ---- SOLUTION ---- */
+#solution { background: var(--dark-2); position: relative; overflow: hidden; }
+#solution::before {
+  content: ''; position: absolute; bottom: -300px; left: -200px; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,113,227,0.12) 0%, transparent 70%);
+}
+.solution-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.solution-features { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
+.sol-feat {
+  display: flex; gap: 16px; padding: 22px 24px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; transition: all 0.3s var(--ease);
+}
+.sol-feat:hover { border-color: var(--border-h); transform: translateX(6px); }
+.sol-feat-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(0,113,227,0.12); border: 1px solid rgba(0,113,227,0.25);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.sol-feat-text h4 { font-family: var(--font-h); font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.sol-feat-text p { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
+
+.solution-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.sol-central {
+  width: 140px; height: 140px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 0 60px rgba(0,113,227,0.4);
+  position: relative; z-index: 2;
+}
+.sol-central-icon { font-size: 40px; margin-bottom: 4px; }
+.sol-central-label { font-family: var(--font-h); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; }
+.sol-rings {
+  position: absolute; width: 320px; height: 320px;
+  border: 1px solid rgba(0,113,227,0.15); border-radius: 50%;
+  animation: spin 20s linear infinite;
+}
+.sol-rings-2 {
+  position: absolute; width: 220px; height: 220px;
+  border: 1px solid rgba(0,113,227,0.1); border-radius: 50%;
+  animation: spin 15s linear infinite reverse;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.sol-orbit-dot {
+  position: absolute; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--dark-4); border: 1px solid rgba(0,113,227,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; top: -18px; left: 50%; transform: translateX(-50%);
+}
+
+/* ---- SERVICES ---- */
+#services { background: var(--dark); }
+.services-inner { max-width: 1200px; margin: 0 auto; }
+.services-header { text-align: center; margin-bottom: 64px; }
+.services-header .section-sub { margin: 16px auto 0; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.service-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: all 0.35s var(--ease); cursor: pointer;
+}
+.service-card:hover { border-color: rgba(0,113,227,0.4); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.service-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,113,227,0.06) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.35s;
+}
+.service-card:hover::before { opacity: 1; }
+.service-top-line {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  opacity: 0; transition: opacity 0.35s;
+}
+.service-card:hover .service-top-line { opacity: 1; }
+.service-icon {
+  width: 60px; height: 60px; border-radius: 16px; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center; font-size: 28px;
+}
+.service-card h3 { font-family: var(--font-h); font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+.service-card p { font-size: 14px; color: var(--gray-3); line-height: 1.75; margin-bottom: 20px; }
+.service-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.service-list li {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--gray-2);
+}
+.service-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--blue-light); flex-shrink: 0; }
+.service-badge {
+  display: inline-block; margin-top: 24px;
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.05em;
+  background: rgba(0,113,227,0.1); color: var(--blue-light);
+  border: 1px solid rgba(0,113,227,0.25);
+}
+
+/* ---- METRICS ---- */
+#metrics {
+  background: var(--dark-3);
+  position: relative; overflow: hidden;
+}
+#metrics::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,113,227,0.08) 0%, transparent 70%);
+}
+.metrics-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.metrics-header { text-align: center; margin-bottom: 64px; }
+.metrics-header .section-sub { margin: 16px auto 0; }
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.metric-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px 28px; text-align: center;
+  position: relative; overflow: hidden; transition: all 0.3s var(--ease);
+}
+.metric-card:hover { border-color: rgba(0,113,227,0.4); transform: translateY(-4px); }
+.metric-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--neon));
+}
+.metric-num {
+  font-family: var(--font-h); font-size: 52px; font-weight: 800;
+  background: linear-gradient(135deg, var(--blue-light), var(--neon));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1; margin-bottom: 10px;
+}
+.metric-label { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.metric-desc { font-size: 13px; color: var(--gray-3); }
+
+/* ---- HOW IT WORKS ---- */
+#how { background: var(--dark-2); }
+.how-inner { max-width: 1200px; margin: 0 auto; }
+.how-header { text-align: center; margin-bottom: 64px; }
+.how-header .section-sub { margin: 16px auto 0; }
+.how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.how-steps::before {
+  content: ''; position: absolute; top: 38px; left: 12%; right: 12%; height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--neon));
+}
+.how-step { padding: 0 16px; text-align: center; }
+.how-step-num {
+  width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 28px;
+  background: var(--dark-2); border: 2px solid var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-h); font-size: 22px; font-weight: 800; color: var(--blue-light);
+  position: relative; z-index: 1;
+  box-shadow: 0 0 30px rgba(0,113,227,0.25);
+}
+.how-step h3 { font-family: var(--font-h); font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+.how-step p { font-size: 13px; color: var(--gray-3); line-height: 1.7; }
+
+/* ---- TESTIMONIALS ---- */
+#testimonials { background: var(--dark); }
+.test-inner { max-width: 1200px; margin: 0 auto; }
+.test-header { text-align: center; margin-bottom: 64px; }
+.test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+.test-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px 28px;
+  transition: all 0.3s var(--ease);
+}
+.test-card:hover { border-color: rgba(0,113,227,0.35); transform: translateY(-4px); }
+.test-stars { color: #FFB800; font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+.test-quote { font-size: 15px; color: var(--gray-2); line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+.test-author { display: flex; align-items: center; gap: 14px; }
+.test-avatar {
+  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-h); font-size: 16px; font-weight: 700;
+  color: var(--white);
+}
+.test-name { font-weight: 600; font-size: 14px; }
+.test-role { font-size: 12px; color: var(--gray-3); margin-top: 2px; }
+
+/* ---- LEAD FORM ---- */
+#contact {
+  background: var(--dark-3); position: relative; overflow: hidden;
+}
+#contact::before {
+  content: ''; position: absolute; top: -300px; right: -200px; width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(0,113,227,0.12) 0%, transparent 70%);
+}
+.contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.contact-info .section-sub { margin-top: 16px; margin-bottom: 40px; }
+.contact-perks { display: flex; flex-direction: column; gap: 16px; }
+.contact-perk { display: flex; align-items: center; gap: 14px; }
+.contact-perk-icon {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(0,113,227,0.12); border: 1px solid rgba(0,113,227,0.25);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.contact-perk-text { font-size: 14px; color: var(--gray-2); }
+.contact-perk-text strong { display: block; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+
+.contact-form-wrap {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 20px; padding: 36px 32px;
+}
+.contact-form-title { font-family: var(--font-h); font-size: 22px; font-weight: 700; margin-bottom: 28px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 13px; font-weight: 500; color: var(--gray-2); }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+  color: var(--white); font-size: 14px; font-family: var(--font-b);
+  outline: none; transition: all 0.2s; width: 100%;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--gray-4); }
+.form-group select option { background: var(--dark-4); color: var(--white); }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--blue); background: rgba(0,113,227,0.07); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  width: 100%; padding: 14px; border-radius: 10px;
+  background: var(--blue); color: var(--white); border: none;
+  font-size: 15px; font-weight: 600; font-family: var(--font-b);
+  cursor: pointer; transition: all 0.25s var(--ease); margin-top: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.form-submit:hover { background: var(--blue-light); transform: translateY(-2px); box-shadow: 0 10px 30px var(--blue-glow); }
+.form-note { text-align: center; font-size: 12px; color: var(--gray-3); margin-top: 12px; }
+
+/* ---- FINAL CTA ---- */
+#cta {
+  background: var(--dark-2); padding: 120px 5%;
+  position: relative; overflow: hidden;
+}
+.cta-glow {
+  position: absolute; width: 600px; height: 300px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,113,227,0.2) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.cta-inner { max-width: 700px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+.cta-inner .section-title { margin-bottom: 20px; }
+.cta-inner .section-sub { margin: 0 auto 40px; }
+.cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+/* ---- FOOTER ---- */
+footer {
+  background: var(--dark); border-top: 1px solid var(--border);
+  padding: 60px 5% 32px;
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand .nav-logo { margin-bottom: 16px; }
+.footer-brand p { font-size: 14px; color: var(--gray-3); line-height: 1.7; max-width: 280px; margin-bottom: 24px; }
+.footer-social { display: flex; gap: 10px; }
+.footer-social a {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--card); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-3); text-decoration: none; font-size: 14px;
+  transition: all 0.2s;
+}
+.footer-social a:hover { border-color: var(--blue); color: var(--blue-light); }
+.footer-col h4 { font-family: var(--font-h); font-size: 14px; font-weight: 700; margin-bottom: 20px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul a { color: var(--gray-3); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+.footer-col ul a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-bottom p { font-size: 13px; color: var(--gray-4); }
+.footer-bottom-links { display: flex; gap: 24px; }
+.footer-bottom-links a { font-size: 13px; color: var(--gray-4); text-decoration: none; transition: color 0.2s; }
+.footer-bottom-links a:hover { color: var(--gray-2); }
+
+/* ---- PAGE SECTIONS (multi-page) ---- */
+.page { display: none; }
+.page.active { display: block; }
+#page-home { display: block; }
+
+/* ---- SERVICES PAGE ---- */
+.services-detail-section { background: var(--dark-2); }
+.service-detail { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; padding: 80px 0; border-bottom: 1px solid var(--border); }
+.service-detail:last-child { border-bottom: none; }
+.service-detail.reverse { direction: rtl; }
+.service-detail.reverse > * { direction: ltr; }
+.sd-label { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; color: var(--blue-light); text-transform: uppercase; margin-bottom: 12px; }
+.sd-title { font-family: var(--font-h); font-size: 32px; font-weight: 800; margin-bottom: 16px; line-height: 1.15; }
+.sd-desc { font-size: 15px; color: var(--gray-2); line-height: 1.75; margin-bottom: 28px; }
+.sd-benefits { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+.sd-benefit { display: flex; align-items: flex-start; gap: 12px; }
+.sd-benefit-check {
+  width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0; margin-top: 2px;
+  background: rgba(0,113,227,0.15); border: 1px solid rgba(0,113,227,0.3);
+  display: flex; align-items: center; justify-content: center; color: var(--blue-light); font-size: 12px;
+}
+.sd-benefit-text { font-size: 14px; color: var(--gray-2); }
+.sd-use-cases { margin-top: 8px; }
+.sd-use-cases h4 { font-size: 13px; font-weight: 600; color: var(--gray-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+.sd-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.sd-tag { padding: 6px 14px; border-radius: 100px; font-size: 12px; background: rgba(0,113,227,0.08); border: 1px solid rgba(0,113,227,0.2); color: var(--blue-light); }
+.sd-visual {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px; aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+}
+.sd-anim-wrap {
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-radius: 20px; padding: 20px;
+  display: flex; align-items: center; justify-content: center;
+  aspect-ratio: unset; min-height: 340px;
+}
+.sd-anim-svg { width: 100%; height: auto; max-width: 380px; }
+.sd-visual-icon { font-size: 64px; }
+.sd-visual-label { font-family: var(--font-h); font-size: 16px; font-weight: 700; color: var(--gray-2); }
+
+/* ---- ABOUT PAGE ---- */
+.about-hero { background: var(--dark-2); padding: 100px 5% 50px; text-align: center; }
+.about-hero-inner { max-width: 800px; margin: 0 auto; }
+.about-mission { background: var(--dark-3); padding: 60px 5%; }
+.about-mission-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.about-values { background: var(--dark); padding: 60px 5%; }
+.about-values-inner { max-width: 1100px; margin: 0 auto; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+.value-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px;
+  transition: all 0.3s var(--ease);
+}
+.value-card:hover { border-color: rgba(0,113,227,0.35); transform: translateY(-4px); }
+.value-icon { font-size: 32px; margin-bottom: 16px; }
+.value-card h3 { font-family: var(--font-h); font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.value-card p { font-size: 14px; color: var(--gray-3); line-height: 1.7; }
+
+/* ---- TEAM PAGE ---- */
+.team-hero { background: var(--dark-2); padding: 100px 5% 50px; text-align: center; }
+.team-section { background: var(--dark); padding: 60px 5%; }
+.team-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.team-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px 24px; text-align: center;
+  transition: all 0.3s var(--ease);
+}
+.team-card:hover { border-color: rgba(0,113,227,0.35); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.team-avatar {
+  width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-h); font-size: 32px; font-weight: 800;
+  border: 3px solid rgba(0,113,227,0.4);
+  position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0;
+}
+.team-avatar img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border-radius: 50%;
+}
+.team-avatar-overlay {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s; z-index: 2;
+  font-size: 20px;
+}
+.team-avatar:hover .team-avatar-overlay { opacity: 1; }
+.team-photo-input { display: none; }
+.team-name { font-family: var(--font-h); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.team-role { font-size: 13px; color: var(--blue-light); font-weight: 600; margin-bottom: 12px; letter-spacing: 0.03em; }
+.team-bio { font-size: 13px; color: var(--gray-3); line-height: 1.7; }
+.team-expertise { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 16px; }
+.team-tag { padding: 4px 12px; border-radius: 100px; font-size: 11px; background: rgba(0,113,227,0.1); border: 1px solid rgba(0,113,227,0.2); color: var(--gray-2); }
+
+/* ---- CASE STUDIES PAGE ---- */
+.cases-hero { background: var(--dark-2); padding: 100px 5% 50px; text-align: center; }
+.cases-section { background: var(--dark-3); padding: 60px 5%; }
+.cases-grid { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+.case-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 40px 36px;
+  display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: start;
+  transition: all 0.3s var(--ease);
+}
+.case-card:hover { border-color: rgba(0,113,227,0.35); }
+.case-num { font-family: var(--font-h); font-size: 12px; font-weight: 700; color: var(--blue-light); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px; }
+.case-title { font-family: var(--font-h); font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+.case-desc { font-size: 14px; color: var(--gray-3); line-height: 1.75; margin-bottom: 24px; max-width: 560px; }
+.case-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.case-tag { padding: 5px 12px; border-radius: 100px; font-size: 12px; background: rgba(0,113,227,0.1); border: 1px solid rgba(0,113,227,0.2); color: var(--blue-light); }
+.case-metrics { display: flex; flex-direction: column; gap: 16px; min-width: 180px; }
+.case-metric { text-align: center; padding: 20px; background: rgba(0,113,227,0.07); border: 1px solid rgba(0,113,227,0.15); border-radius: 14px; }
+.case-metric-num { font-family: var(--font-h); font-size: 32px; font-weight: 800; background: linear-gradient(135deg, var(--blue-light), var(--neon)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.case-metric-label { font-size: 12px; color: var(--gray-3); margin-top: 4px; }
+
+/* ---- CONTACT PAGE ---- */
+.contact-page-hero { background: var(--dark-2); padding: 100px 5% 50px; text-align: center; }
+.contact-page-section { background: var(--dark); padding: 80px 5%; }
+.contact-page-inner { max-width: 700px; margin: 0 auto; }
+.contact-page-form {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 40px 36px;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .solution-inner { grid-template-columns: 1fr; }
+  .solution-visual { display: none; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-steps { grid-template-columns: repeat(2, 1fr); }
+  .how-steps::before { display: none; }
+  .contact-inner { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .about-mission-inner { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr 1fr; }
+  .service-detail { grid-template-columns: 1fr; }
+  .service-detail.reverse { direction: ltr; }
+  .case-card { grid-template-columns: 1fr; }
+  .case-metrics { flex-direction: row; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .how-steps { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---- PAGE TRANSITIONS ---- */
+.page { animation: fadeIn 0.4s var(--ease); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ---- COUNTER ANIMATION ---- */
+.count-up { transition: all 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-icon" onclick="triggerIconUpload(event)" title="Click to upload your logo icon">
+      <svg id="nav-default-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;">
+        <path d="M12 3L4 8.5V17L12 21L20 17V8.5L12 3Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M12 3L12 21M4 8.5L20 8.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M8 6L12 9L16 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <img id="nav-custom-icon" src="" alt="Logo" style="display:none;width:42px;height:42px;object-fit:cover;border-radius:6px;">
+      <div class="icon-upload-overlay">📷</div>
+    </div>
+    <div class="nav-logo-text">AGW <span>AUTOMATION</span></div>
+  </a>
+  <input type="file" id="icon-file-input" accept="image/*" onchange="handleIconUpload(event)">
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+    <li><a href="#" onclick="showPage('services'); return false;">Services</a></li>
+    <li><a href="#" onclick="showPage('about'); return false;">About</a></li>
+    <li><a href="#" onclick="showPage('team'); return false;">Team</a></li>
+    <li><a href="#" onclick="showPage('cases'); return false;">Case Studies</a></li>
+    <li><a href="#" onclick="showPage('contact'); return false;">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta" onclick="showPage('contact'); return false;">Book Free Call →</a>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!--                        HOME PAGE                            -->
+<!-- ============================================================ -->
+<div id="page-home" class="page active">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        AI-Powered Automation Platform
+      </div>
+      <h1 class="hero-h1">
+        Automate Your<br>
+        <span class="text-gradient">Business with AI</span>
+      </h1>
+      <p class="hero-sub">AGW builds powerful AI workflows, GPT automations, and intelligent websites that help businesses save time, reduce costs, and scale faster.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary" onclick="showPage('contact'); return false;">Get a Free Consultation →</a>
+        <a href="#how" class="btn-outline">See How It Works ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">80%</div>
+          <div class="hero-stat-label">TASK REDUCTION</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">5×</div>
+          <div class="hero-stat-label">FASTER WORKFLOWS</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">60%</div>
+          <div class="hero-stat-label">COST SAVINGS</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="workflow-header">
+        <div class="wf-dot red"></div>
+        <div class="wf-dot yellow"></div>
+        <div class="wf-dot green"></div>
+        <span class="wf-title">agw-automation-pipeline.json</span>
+      </div>
+      <div class="workflow-nodes">
+        <div class="wf-node done">
+          <div class="wf-icon" style="background:rgba(40,202,65,0.1);border:1px solid rgba(40,202,65,0.2)">📥</div>
+          <div class="wf-info">
+            <div class="wf-name">Data Ingestion</div>
+            <div class="wf-desc">CRM & Email sync → 1,204 records</div>
+          </div>
+          <span class="wf-status status-done">✓ Done</span>
+        </div>
+        <div class="wf-connector"><div class="wf-connector-line"></div></div>
+        <div class="wf-node done">
+          <div class="wf-icon" style="background:rgba(40,202,65,0.1);border:1px solid rgba(40,202,65,0.2)">🤖</div>
+          <div class="wf-info">
+            <div class="wf-name">GPT Classification</div>
+            <div class="wf-desc">AI scoring leads by intent</div>
+          </div>
+          <span class="wf-status status-done">✓ Done</span>
+        </div>
+        <div class="wf-connector"><div class="wf-connector-line"></div></div>
+        <div class="wf-node active">
+          <div class="wf-icon" style="background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.3)">⚡</div>
+          <div class="wf-info">
+            <div class="wf-name">Automation Engine</div>
+            <div class="wf-desc">Routing high-priority leads</div>
+          </div>
+          <span class="wf-status status-active">● Running</span>
+        </div>
+        <div class="wf-connector"><div class="wf-connector-line"></div></div>
+        <div class="wf-node">
+          <div class="wf-icon" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)">📊</div>
+          <div class="wf-info">
+            <div class="wf-name">Report & Notify</div>
+            <div class="wf-desc">Send Slack summary to team</div>
+          </div>
+          <span class="wf-status status-wait">Queued</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section id="problems">
+  <div class="problems-inner">
+    <div class="problems-header">
+      <div class="section-tag">The Problem</div>
+      <h2 class="section-title">Most Businesses Waste Hundreds<br>of Hours on <span class="text-gradient">Manual Work</span></h2>
+      <p class="section-sub">Without AI automation, your team is trapped in repetitive cycles that drain resources, slow growth, and limit scale.</p>
+    </div>
+    <div class="problems-grid">
+      <div class="problem-card">
+        <div class="problem-icon">⏳</div>
+        <h3>Manual Repetitive Tasks</h3>
+        <p>Your team spends hours copying data, sending follow-up emails, and managing spreadsheets — work that AI can handle instantly.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🐢</div>
+        <h3>Slow Operations</h3>
+        <p>Bottlenecks, handoffs, and manual approvals kill momentum. Processes that should take minutes drag on for days.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔀</div>
+        <h3>Poor Workflow Management</h3>
+        <p>Disconnected tools, siloed teams, and no automation means critical tasks fall through the cracks every single day.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🚫</div>
+        <h3>No AI Integration</h3>
+        <p>Your competitors are already using AI to outpace you. Without AI, you're fighting tomorrow's battles with yesterday's tools.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="solution-inner">
+    <div>
+      <div class="section-tag">The Solution</div>
+      <h2 class="section-title">AGW Turns Your Business into an<br><span class="text-gradient">AI-Powered Machine</span></h2>
+      <p class="section-sub">We design, build, and deploy custom AI systems that automate your operations from end to end — so your team focuses on what actually moves the needle.</p>
+      <div class="solution-features">
+        <div class="sol-feat">
+          <div class="sol-feat-icon">🔄</div>
+          <div class="sol-feat-text">
+            <h4>AI Workflow Automation</h4>
+            <p>End-to-end process automation that eliminates manual steps and runs 24/7 without human intervention.</p>
+          </div>
+        </div>
+        <div class="sol-feat">
+          <div class="sol-feat-icon">💬</div>
+          <div class="sol-feat-text">
+            <h4>GPT-Powered Assistants</h4>
+            <p>Custom AI assistants trained on your business data to handle support, sales, and communication at scale.</p>
+          </div>
+        </div>
+        <div class="sol-feat">
+          <div class="sol-feat-icon">🌐</div>
+          <div class="sol-feat-text">
+            <h4>AI-Integrated Websites</h4>
+            <p>Smart websites that capture leads, engage visitors, and trigger automations — working while you sleep.</p>
+          </div>
+        </div>
+        <div class="sol-feat">
+          <div class="sol-feat-icon">🔗</div>
+          <div class="sol-feat-text">
+            <h4>Business System Integration</h4>
+            <p>Connect all your tools — CRM, email, Slack, databases — into one unified automated ecosystem.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="solution-visual">
+      <div class="sol-rings">
+        <div class="sol-orbit-dot">🔄</div>
+      </div>
+      <div class="sol-rings-2"></div>
+      <div class="sol-central">
+        <div class="sol-central-icon">🤖</div>
+        <div class="sol-central-label">AGW AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES OVERVIEW -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-header">
+      <div class="section-tag">Our Services</div>
+      <h2 class="section-title">Everything You Need to<br><span class="text-gradient">Automate & Scale</span></h2>
+      <p class="section-sub">From AI workflows to smart websites, we build the systems that transform how your business operates.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div style="background:linear-gradient(90deg,var(--blue),var(--neon))" class="service-top-line"></div>
+        <div class="service-icon" style="background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.25)">⚡</div>
+        <h3>AI Workflows</h3>
+        <p>Custom AI systems that automate your entire operations pipeline — from data intake to decision-making to output.</p>
+        <ul class="service-list">
+          <li>Multi-step process automation</li>
+          <li>Conditional logic & branching</li>
+          <li>Real-time monitoring & alerts</li>
+          <li>API & webhook integrations</li>
+        </ul>
+        <span class="service-badge">Most Popular</span>
+      </div>
+      <div class="service-card">
+        <div style="background:linear-gradient(90deg,var(--purple),var(--blue))" class="service-top-line"></div>
+        <div class="service-icon" style="background:rgba(123,47,255,0.12);border:1px solid rgba(123,47,255,0.25)">🤖</div>
+        <h3>GPT Automations</h3>
+        <p>Smart GPT-powered assistants that handle customer support, lead qualification, content generation, and communication at scale.</p>
+        <ul class="service-list">
+          <li>Custom-trained on your data</li>
+          <li>24/7 intelligent support</li>
+          <li>Multi-channel deployment</li>
+          <li>Escalation handling</li>
+        </ul>
+        <span class="service-badge" style="background:rgba(123,47,255,0.1);color:var(--purple-light);border-color:rgba(123,47,255,0.25)">AI-Powered</span>
+      </div>
+      <div class="service-card">
+        <div style="background:linear-gradient(90deg,var(--neon),var(--blue))" class="service-top-line"></div>
+        <div class="service-icon" style="background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2)">🌐</div>
+        <h3>Smart Websites</h3>
+        <p>Websites that don't just look good — they work for you. AI-powered lead capture, intelligent chatbots, and built-in automation triggers.</p>
+        <ul class="service-list">
+          <li>AI-powered lead capture</li>
+          <li>Automation-triggered flows</li>
+          <li>Performance-optimized code</li>
+          <li>Integrated analytics</li>
+        </ul>
+        <span class="service-badge" style="background:rgba(0,207,255,0.08);color:var(--neon-2);border-color:rgba(0,207,255,0.2)">High Converting</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="#" class="btn-outline" onclick="showPage('services'); return false;">View All Services →</a>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section id="metrics">
+  <div class="metrics-inner">
+    <div class="metrics-header">
+      <div class="section-tag">Real Business Impact</div>
+      <h2 class="section-title">Numbers That<br><span class="text-gradient">Speak for Themselves</span></h2>
+      <p class="section-sub">Our AI systems deliver measurable, transformational results for every business we work with.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-num" data-target="80">0%</div>
+        <div class="metric-label">Fewer Repetitive Tasks</div>
+        <div class="metric-desc">Reduction in manual work hours within 90 days</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num" data-target="5" data-suffix="×">0×</div>
+        <div class="metric-label">Faster Workflows</div>
+        <div class="metric-desc">Average speed improvement across automated processes</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num" data-target="24" data-suffix="/7">0</div>
+        <div class="metric-label">Always-On Systems</div>
+        <div class="metric-desc">AI systems that never sleep, never stop, never miss a beat</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num" data-target="60">0%</div>
+        <div class="metric-label">Cost Savings</div>
+        <div class="metric-desc">Average operational cost reduction after full deployment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <div class="section-tag">The Process</div>
+      <h2 class="section-title">From Consultation to<br><span class="text-gradient">Fully Automated</span></h2>
+      <p class="section-sub">A clear, structured process that gets your AI systems live in weeks, not months.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <h3>Consultation</h3>
+        <p>We deep-dive into your business processes, identify automation opportunities, and define your AI roadmap.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <h3>AI System Design</h3>
+        <p>We architect custom AI workflows tailored to your exact needs, tools, and team structure.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <h3>Automation Deployment</h3>
+        <p>We build, test, and deploy your AI systems — fully integrated with your existing tech stack.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <h3>Scale & Optimize</h3>
+        <p>Your business runs faster and smarter. We monitor, optimize, and expand your automation over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="test-inner">
+    <div class="test-header">
+      <div class="section-tag">Testimonials</div>
+      <h2 class="section-title">Trusted by Businesses<br><span class="text-gradient">Across Industries</span></h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-quote">"AGW completely transformed our customer support. What used to take a 5-person team is now handled automatically. Our response time dropped from 8 hours to under 2 minutes."</p>
+        <div class="test-author">
+          <div class="test-avatar" style="background:linear-gradient(135deg,var(--blue),var(--purple))">JM</div>
+          <div>
+            <div class="test-name">James Mitchell</div>
+            <div class="test-role">CEO, Nexova Solutions</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-quote">"The AI workflows AGW built save us 300+ hours every month. Our team now focuses on strategy and growth instead of copy-pasting data between systems."</p>
+        <div class="test-author">
+          <div class="test-avatar" style="background:linear-gradient(135deg,var(--purple),var(--neon))">SR</div>
+          <div>
+            <div class="test-name">Sarah Rahman</div>
+            <div class="test-role">Operations Director, Scalify</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-quote">"Our AI sales assistant increased qualified leads by 40% in the first quarter. The GPT automation handles initial outreach and qualification flawlessly."</p>
+        <div class="test-author">
+          <div class="test-avatar" style="background:linear-gradient(135deg,var(--blue-dark),var(--blue-light))">DK</div>
+          <div>
+            <div class="test-name">David Kim</div>
+            <div class="test-role">VP Sales, GrowthForge</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div class="section-tag">Get Started</div>
+      <h2 class="section-title">Ready to Automate<br>Your <span class="text-gradient">Business?</span></h2>
+      <p class="section-sub">Book a free 30-minute strategy call. We'll analyze your workflow and show you exactly how AI can transform your operations.</p>
+      <div class="contact-perks">
+        <div class="contact-perk">
+          <div class="contact-perk-icon">🎯</div>
+          <div class="contact-perk-text">
+            <strong>Free Automation Audit</strong>
+            We map your current processes and identify quick wins
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">🗺️</div>
+          <div class="contact-perk-text">
+            <strong>Custom AI Roadmap</strong>
+            You get a tailored automation plan for your business
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">⚡</div>
+          <div class="contact-perk-text">
+            <strong>Fast Implementation</strong>
+            Most systems go live within 2–4 weeks
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">🔒</div>
+          <div class="contact-perk-text">
+            <strong>No Lock-In</strong>
+            You own everything we build — full transparency
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <div class="contact-form-title">Book Your Free Strategy Call</div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name *</label><input type="text" placeholder="John Smith"></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" placeholder="john@company.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Company Name</label><input type="text" placeholder="Acme Corp"></div>
+        <div class="form-group"><label>Business Type</label>
+          <select>
+            <option value="">Select industry...</option>
+            <option>E-commerce</option>
+            <option>SaaS / Tech</option>
+            <option>Healthcare</option>
+            <option>Finance</option>
+            <option>Real Estate</option>
+            <option>Marketing Agency</option>
+            <option>Manufacturing</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>What would you like to automate?</label>
+        <textarea placeholder="Describe your current manual processes, pain points, or what you'd like AI to handle for you..."></textarea>
+      </div>
+      <button class="form-submit">Book Free Strategy Call →</button>
+      <p class="form-note">🔒 No spam, no pressure. Just a focused strategy conversation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="section-tag" style="margin:0 auto 20px">Start Today</div>
+    <h2 class="section-title">Start Your AI Automation<br><span class="text-gradient">Journey Today</span></h2>
+    <p class="section-sub">Join the businesses already running on AI. The future is automated — don't get left behind.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-primary" onclick="showPage('contact'); return false;">Book Free Consultation →</a>
+      <a href="#" class="btn-outline" onclick="showPage('cases'); return false;">View Case Studies</a>
+    </div>
+  </div>
+</section>
+
+</div><!-- end page-home -->
+
+<!-- ============================================================ -->
+<!--                      SERVICES PAGE                          -->
+<!-- ============================================================ -->
+<div id="page-services" class="page">
+<section style="background:var(--dark-2);padding:100px 5% 50px;text-align:center;">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="section-tag">Our Services</div>
+    <h1 class="section-title">AI Solutions Built for<br><span class="text-gradient">Real Business Results</span></h1>
+    <p class="section-sub" style="margin:16px auto 0;">Every service we offer is designed to create measurable impact — reducing costs, saving time, and helping you scale.</p>
+  </div>
+</section>
+
+<section class="services-detail-section" style="padding:0 5%;">
+  <!-- AI Workflows -->
+  <div class="service-detail">
+    <div>
+      <div class="sd-label">Service 01</div>
+      <h2 class="sd-title">AI Workflow<br><span class="text-gradient">Automation</span></h2>
+      <p class="sd-desc">We build end-to-end automated pipelines that replace manual, repetitive processes with intelligent systems that run 24/7 — with zero human intervention required.</p>
+      <div class="sd-benefits">
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Eliminates manual data entry, routing, and follow-up tasks</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Connects across your CRM, email, Slack, databases and more</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Real-time monitoring with error handling and alerts</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Scales automatically as your business grows</div></div>
+      </div>
+      <div class="sd-use-cases">
+        <h4>Example Use Cases</h4>
+        <div class="sd-tags">
+          <span class="sd-tag">Lead Routing</span>
+          <span class="sd-tag">Invoice Processing</span>
+          <span class="sd-tag">Data Sync</span>
+          <span class="sd-tag">Report Generation</span>
+          <span class="sd-tag">Onboarding Flows</span>
+        </div>
+      </div>
+    </div>
+    <div class="sd-visual sd-anim-wrap">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" class="sd-anim-svg">
+        <defs>
+          <linearGradient id="g1a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0071e3"/><stop offset="100%" stop-color="#00CFFF"/></linearGradient>
+          <linearGradient id="g1b" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0071e3" stop-opacity="0"/><stop offset="50%" stop-color="#00CFFF"/><stop offset="100%" stop-color="#0071e3" stop-opacity="0"/></linearGradient>
+          <filter id="glow1"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- Pipeline nodes -->
+        <g transform="translate(40,30)">
+          <!-- Node 1 -->
+          <rect x="0" y="0" width="120" height="52" rx="12" fill="rgba(0,113,227,0.12)" stroke="rgba(0,113,227,0.5)" stroke-width="1.5"/>
+          <rect x="10" y="10" width="32" height="32" rx="8" fill="rgba(0,113,227,0.2)"/>
+          <text x="26" y="31" text-anchor="middle" font-size="16" fill="#fff">📥</text>
+          <text x="70" y="22" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">Data Intake</text>
+          <text x="70" y="36" font-size="9" fill="#7B88A8" font-family="sans-serif">CRM + Email sync</text>
+          <rect x="88" y="18" width="24" height="14" rx="7" fill="rgba(40,202,65,0.15)"/>
+          <text x="100" y="28" text-anchor="middle" font-size="8" fill="#28CA41" font-weight="700">✓ ON</text>
+          <!-- Connector line animated -->
+          <line x1="60" y1="52" x2="60" y2="80" stroke="url(#g1b)" stroke-width="2"/>
+          <circle class="pulse-dot" cx="60" cy="66" r="4" fill="#0071e3" filter="url(#glow1)"/>
+
+          <!-- Node 2 -->
+          <rect x="0" y="80" width="120" height="52" rx="12" fill="rgba(123,47,255,0.12)" stroke="rgba(123,47,255,0.45)" stroke-width="1.5"/>
+          <rect x="10" y="90" width="32" height="32" rx="8" fill="rgba(123,47,255,0.2)"/>
+          <text x="26" y="111" text-anchor="middle" font-size="16" fill="#fff">🤖</text>
+          <text x="70" y="102" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">AI Processing</text>
+          <text x="70" y="116" font-size="9" fill="#7B88A8" font-family="sans-serif">GPT classification</text>
+          <rect x="84" y="98" width="28" height="14" rx="7" fill="rgba(0,207,255,0.15)"/>
+          <text x="98" y="108" text-anchor="middle" font-size="8" fill="#00CFFF" font-weight="700">● RUN</text>
+          <line x1="60" y1="132" x2="60" y2="160" stroke="url(#g1b)" stroke-width="2"/>
+          <circle class="pulse-dot2" cx="60" cy="146" r="4" fill="#7B2FFF" filter="url(#glow1)"/>
+
+          <!-- Node 3 -->
+          <rect x="0" y="160" width="120" height="52" rx="12" fill="rgba(0,207,255,0.06)" stroke="rgba(0,207,255,0.3)" stroke-width="1.5"/>
+          <rect x="10" y="170" width="32" height="32" rx="8" fill="rgba(0,207,255,0.12)"/>
+          <text x="26" y="191" text-anchor="middle" font-size="16" fill="#fff">⚡</text>
+          <text x="70" y="182" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">Automation</text>
+          <text x="70" y="196" font-size="9" fill="#7B88A8" font-family="sans-serif">Route & trigger</text>
+          <rect x="82" y="178" width="30" height="14" rx="7" fill="rgba(255,189,46,0.12)"/>
+          <text x="97" y="188" text-anchor="middle" font-size="8" fill="#FFBD2E" font-weight="700">QUEUE</text>
+          <line x1="60" y1="212" x2="60" y2="240" stroke="url(#g1b)" stroke-width="2"/>
+          <circle cx="60" cy="226" r="3" fill="rgba(255,255,255,0.2)"/>
+
+          <!-- Node 4 -->
+          <rect x="0" y="240" width="120" height="52" rx="12" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <rect x="10" y="250" width="32" height="32" rx="8" fill="rgba(255,255,255,0.06)"/>
+          <text x="26" y="271" text-anchor="middle" font-size="16" fill="#7B88A8">📊</text>
+          <text x="70" y="262" font-size="10" font-weight="700" fill="#7B88A8" font-family="Outfit,sans-serif">Report & Notify</text>
+          <text x="70" y="276" font-size="9" fill="#3A4560" font-family="sans-serif">Slack + dashboard</text>
+
+          <!-- Stats on right -->
+          <g transform="translate(140, 20)">
+            <rect x="0" y="0" width="90" height="60" rx="12" fill="rgba(0,113,227,0.08)" stroke="rgba(0,113,227,0.2)" stroke-width="1"/>
+            <text x="45" y="22" text-anchor="middle" font-size="22" font-weight="800" fill="#1a8aff" font-family="Outfit,sans-serif">1,204</text>
+            <text x="45" y="36" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Records synced</text>
+            <text x="45" y="50" text-anchor="middle" font-size="8" fill="#28CA41" font-family="sans-serif">↑ Live</text>
+
+            <rect x="0" y="76" width="90" height="60" rx="12" fill="rgba(123,47,255,0.08)" stroke="rgba(123,47,255,0.2)" stroke-width="1"/>
+            <text x="45" y="98" text-anchor="middle" font-size="22" font-weight="800" fill="#9B5FFF" font-family="Outfit,sans-serif">98.2%</text>
+            <text x="45" y="112" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Accuracy rate</text>
+            <text x="45" y="126" text-anchor="middle" font-size="8" fill="#28CA41" font-family="sans-serif">↑ +2.1%</text>
+
+            <rect x="0" y="152" width="90" height="60" rx="12" fill="rgba(0,207,255,0.06)" stroke="rgba(0,207,255,0.2)" stroke-width="1"/>
+            <text x="45" y="174" text-anchor="middle" font-size="22" font-weight="800" fill="#00CFFF" font-family="Outfit,sans-serif">0.3s</text>
+            <text x="45" y="188" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Avg. exec time</text>
+            <text x="45" y="202" text-anchor="middle" font-size="8" fill="#28CA41" font-family="sans-serif">↓ 5× faster</text>
+          </g>
+        </g>
+        <style>
+          .pulse-dot { animation: sdPulse 1.4s ease-in-out infinite; }
+          .pulse-dot2 { animation: sdPulse 1.4s ease-in-out infinite 0.7s; }
+          @keyframes sdPulse { 0%,100%{opacity:1;r:4} 50%{opacity:0.4;r:6} }
+        </style>
+      </svg>
+    </div>
+  </div>
+
+  <!-- GPT Automation -->
+  <div class="service-detail reverse">
+    <div>
+      <div class="sd-label">Service 02</div>
+      <h2 class="sd-title">GPT-Powered<br><span class="text-gradient">Automation</span></h2>
+      <p class="sd-desc">Deploy intelligent, conversational AI systems trained on your business data. Our GPT automations handle customer interactions, lead qualification, and content generation with human-level quality.</p>
+      <div class="sd-benefits">
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Fine-tuned on your products, tone of voice, and processes</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Handles thousands of conversations simultaneously</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Smart escalation to human agents when needed</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Continuous learning and improvement over time</div></div>
+      </div>
+      <div class="sd-use-cases">
+        <h4>Example Use Cases</h4>
+        <div class="sd-tags">
+          <span class="sd-tag">Customer Support</span>
+          <span class="sd-tag">Sales Qualification</span>
+          <span class="sd-tag">Content Creation</span>
+          <span class="sd-tag">Email Responses</span>
+          <span class="sd-tag">FAQ Automation</span>
+        </div>
+      </div>
+    </div>
+    <div class="sd-visual sd-anim-wrap">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" class="sd-anim-svg">
+        <defs>
+          <linearGradient id="g2a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7B2FFF"/><stop offset="100%" stop-color="#00CFFF"/></linearGradient>
+          <filter id="glow2"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- Central AI brain -->
+        <circle cx="180" cy="130" r="54" fill="none" stroke="rgba(123,47,255,0.2)" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <circle cx="180" cy="130" r="38" fill="none" stroke="rgba(0,207,255,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
+        <circle cx="180" cy="130" r="52" fill="rgba(123,47,255,0.06)" stroke="url(#g2a)" stroke-width="2" filter="url(#glow2)">
+          <animateTransform attributeName="transform" type="rotate" from="0 180 130" to="360 180 130" dur="18s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="180" cy="130" r="36" fill="rgba(7,11,24,0.9)" stroke="rgba(123,47,255,0.4)" stroke-width="1.5"/>
+        <text x="180" y="123" text-anchor="middle" font-size="26" fill="#fff">🤖</text>
+        <text x="180" y="145" text-anchor="middle" font-size="9" font-weight="700" fill="#9B5FFF" font-family="Outfit,sans-serif" letter-spacing="1">GPT ENGINE</text>
+        <!-- Orbit dots -->
+        <circle cx="180" cy="76" r="6" fill="#7B2FFF" filter="url(#glow2)"><animateTransform attributeName="transform" type="rotate" from="0 180 130" to="360 180 130" dur="6s" repeatCount="indefinite"/></circle>
+        <circle cx="180" cy="184" r="5" fill="#00CFFF"><animateTransform attributeName="transform" type="rotate" from="180 180 130" to="540 180 130" dur="6s" repeatCount="indefinite"/></circle>
+        <circle cx="128" cy="130" r="4" fill="#1a8aff"><animateTransform attributeName="transform" type="rotate" from="90 180 130" to="450 180 130" dur="9s" repeatCount="indefinite"/></circle>
+        <!-- Chat bubbles -->
+        <!-- User bubble -->
+        <rect x="20" y="20" width="130" height="44" rx="14" rx="14" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1">
+          <animate attributeName="opacity" values="0;1;1;0" dur="4s" begin="0s" repeatCount="indefinite"/>
+        </rect>
+        <text x="36" y="39" font-size="9" fill="#C0C8DC" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;1;1;0" dur="4s" begin="0s" repeatCount="indefinite"/>
+          User: My order hasn't arrived
+        </text>
+        <text x="36" y="53" font-size="9" fill="#7B88A8" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;1;1;0" dur="4s" begin="0s" repeatCount="indefinite"/>
+          — can someone help?
+        </text>
+        <!-- AI bubble 1 -->
+        <rect x="20" y="240" width="150" height="56" rx="14" fill="rgba(0,113,227,0.1)" stroke="rgba(0,113,227,0.35)" stroke-width="1">
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+        </rect>
+        <text x="36" y="259" font-size="9" fill="#C0C8DC" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+          AI: I found your order #4821.
+        </text>
+        <text x="36" y="273" font-size="9" fill="#C0C8DC" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+          It ships tomorrow — tracking
+        </text>
+        <text x="36" y="287" font-size="9" fill="#1a8aff" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+          link sent to your email ✓
+        </text>
+        <!-- Right stat cards -->
+        <rect x="220" y="20" width="120" height="48" rx="10" fill="rgba(0,113,227,0.08)" stroke="rgba(0,113,227,0.2)" stroke-width="1"/>
+        <text x="280" y="42" text-anchor="middle" font-size="20" font-weight="800" fill="#1a8aff" font-family="Outfit,sans-serif">&lt;2 min</text>
+        <text x="280" y="57" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Avg response time</text>
+        <rect x="220" y="86" width="120" height="48" rx="10" fill="rgba(123,47,255,0.08)" stroke="rgba(123,47,255,0.2)" stroke-width="1"/>
+        <text x="280" y="108" text-anchor="middle" font-size="20" font-weight="800" fill="#9B5FFF" font-family="Outfit,sans-serif">85%</text>
+        <text x="280" y="122" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Auto-resolved</text>
+        <rect x="220" y="152" width="120" height="48" rx="10" fill="rgba(0,207,255,0.06)" stroke="rgba(0,207,255,0.2)" stroke-width="1"/>
+        <text x="280" y="174" text-anchor="middle" font-size="20" font-weight="800" fill="#00CFFF" font-family="Outfit,sans-serif">24/7</text>
+        <text x="280" y="188" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Always active</text>
+        <!-- Typing indicator -->
+        <rect x="220" y="250" width="120" height="40" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <circle cx="250" cy="270" r="4" fill="#7B88A8"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0s" repeatCount="indefinite"/></circle>
+        <circle cx="265" cy="270" r="4" fill="#7B88A8"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.4s" repeatCount="indefinite"/></circle>
+        <circle cx="280" cy="270" r="4" fill="#7B88A8"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.8s" repeatCount="indefinite"/></circle>
+        <text x="300" y="274" font-size="9" fill="#3A4560" font-family="sans-serif">thinking…</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- AI Customer Support -->
+  <div class="service-detail">
+    <div>
+      <div class="sd-label">Service 03</div>
+      <h2 class="sd-title">AI Customer<br><span class="text-gradient">Support System</span></h2>
+      <p class="sd-desc">Replace slow, expensive support teams with an AI system that responds instantly, resolves issues accurately, and learns from every interaction to get smarter over time.</p>
+      <div class="sd-benefits">
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Sub-60-second response times across email, chat, and social</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Handles returns, refunds, FAQs and complex queries</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Sentiment analysis with smart priority routing</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Full ticket history and CRM integration</div></div>
+      </div>
+      <div class="sd-use-cases">
+        <h4>Example Use Cases</h4>
+        <div class="sd-tags">
+          <span class="sd-tag">Helpdesk Automation</span>
+          <span class="sd-tag">Returns Processing</span>
+          <span class="sd-tag">Status Updates</span>
+          <span class="sd-tag">Complaint Handling</span>
+        </div>
+      </div>
+    </div>
+    <div class="sd-visual sd-anim-wrap">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" class="sd-anim-svg">
+        <defs>
+          <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0071e3"/><stop offset="100%" stop-color="#28CA41"/></linearGradient>
+        </defs>
+        <!-- Ticket queue -->
+        <text x="180" y="28" text-anchor="middle" font-size="11" font-weight="700" fill="#7B88A8" font-family="Outfit,sans-serif" letter-spacing="2">LIVE TICKET QUEUE</text>
+        <!-- Ticket 1 - resolving -->
+        <rect x="20" y="40" width="220" height="50" rx="10" fill="rgba(40,202,65,0.08)" stroke="rgba(40,202,65,0.3)" stroke-width="1.5"/>
+        <circle cx="40" cy="65" r="10" fill="rgba(40,202,65,0.15)"/>
+        <text x="40" y="69" text-anchor="middle" font-size="13" fill="#28CA41">✓</text>
+        <text x="60" y="57" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">#4821 — Order status inquiry</text>
+        <text x="60" y="71" font-size="9" fill="#7B88A8" font-family="sans-serif">Resolved in 1.2s · Auto-closed</text>
+        <rect x="188" y="52" width="44" height="16" rx="8" fill="rgba(40,202,65,0.15)"/>
+        <text x="210" y="63" text-anchor="middle" font-size="8" fill="#28CA41" font-weight="700">RESOLVED</text>
+        <!-- Ticket 2 - active -->
+        <rect x="20" y="104" width="220" height="50" rx="10" fill="rgba(0,113,227,0.1)" stroke="rgba(0,113,227,0.45)" stroke-width="1.5"/>
+        <circle cx="40" cy="129" r="10" fill="rgba(0,113,227,0.2)">
+          <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <text x="40" y="133" text-anchor="middle" font-size="13" fill="#1a8aff">●</text>
+        <text x="60" y="121" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">#4822 — Refund request</text>
+        <text x="60" y="135" font-size="9" fill="#7B88A8" font-family="sans-serif">AI analyzing · 0.8s elapsed</text>
+        <rect x="188" y="116" width="44" height="16" rx="8" fill="rgba(0,207,255,0.12)"/>
+        <text x="210" y="127" text-anchor="middle" font-size="8" fill="#00CFFF" font-weight="700">ACTIVE</text>
+        <!-- Ticket 3 queued -->
+        <rect x="20" y="168" width="220" height="50" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <circle cx="40" cy="193" r="10" fill="rgba(255,255,255,0.06)"/>
+        <text x="40" y="197" text-anchor="middle" font-size="13" fill="#3A4560">◷</text>
+        <text x="60" y="185" font-size="10" font-weight="700" fill="#7B88A8" font-family="Outfit,sans-serif">#4823 — Technical support</text>
+        <text x="60" y="199" font-size="9" fill="#3A4560" font-family="sans-serif">Queued · Next in line</text>
+        <rect x="194" y="180" width="38" height="16" rx="8" fill="rgba(255,255,255,0.05)"/>
+        <text x="213" y="191" text-anchor="middle" font-size="8" fill="#3A4560" font-weight="700">QUEUED</text>
+        <!-- Right metrics -->
+        <rect x="260" y="40" width="88" height="64" rx="12" fill="rgba(40,202,65,0.08)" stroke="rgba(40,202,65,0.2)" stroke-width="1"/>
+        <text x="304" y="68" text-anchor="middle" font-size="24" font-weight="800" fill="#28CA41" font-family="Outfit,sans-serif">90%</text>
+        <text x="304" y="82" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Resolution</text>
+        <text x="304" y="95" text-anchor="middle" font-size="8" fill="#3A4560" font-family="sans-serif">rate by AI</text>
+        <rect x="260" y="120" width="88" height="64" rx="12" fill="rgba(0,113,227,0.08)" stroke="rgba(0,113,227,0.2)" stroke-width="1"/>
+        <text x="304" y="148" text-anchor="middle" font-size="24" font-weight="800" fill="#1a8aff" font-family="Outfit,sans-serif">58s</text>
+        <text x="304" y="162" text-anchor="middle" font-size="9" fill="#7B88A8" font-family="sans-serif">Avg first</text>
+        <text x="304" y="175" text-anchor="middle" font-size="8" fill="#3A4560" font-family="sans-serif">response</text>
+        <!-- Sentiment bar -->
+        <text x="20" y="244" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">Customer Sentiment</text>
+        <rect x="20" y="254" width="220" height="10" rx="5" fill="rgba(255,255,255,0.08)"/>
+        <rect x="20" y="254" width="185" height="10" rx="5" fill="url(#g3)"/>
+        <text x="20" y="280" font-size="9" fill="#28CA41" font-family="sans-serif">😊 84% positive</text>
+        <text x="180" y="280" font-size="9" fill="#3A4560" font-family="sans-serif">16% neutral</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Website Solutions -->
+  <div class="service-detail reverse">
+    <div>
+      <div class="sd-label">Service 04</div>
+      <h2 class="sd-title">AI-Powered<br><span class="text-gradient">Website Solutions</span></h2>
+      <p class="sd-desc">We build high-converting websites that are more than just beautiful — they're intelligent. Lead capture, AI chat, automated follow-ups, and performance analytics baked in from day one.</p>
+      <div class="sd-benefits">
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Conversion-optimized design built for real business goals</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Embedded AI chatbot for instant lead engagement</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">CRM integration and automated lead nurture sequences</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">SEO-optimized structure with performance analytics</div></div>
+      </div>
+      <div class="sd-use-cases">
+        <h4>Example Use Cases</h4>
+        <div class="sd-tags">
+          <span class="sd-tag">Landing Pages</span>
+          <span class="sd-tag">Lead Funnels</span>
+          <span class="sd-tag">Corporate Sites</span>
+          <span class="sd-tag">E-commerce</span>
+          <span class="sd-tag">SaaS Products</span>
+        </div>
+      </div>
+    </div>
+    <div class="sd-visual sd-anim-wrap">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" class="sd-anim-svg">
+        <defs>
+          <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0071e3"/><stop offset="100%" stop-color="#00CFFF"/></linearGradient>
+        </defs>
+        <!-- Browser frame -->
+        <rect x="20" y="20" width="240" height="190" rx="14" fill="rgba(7,11,24,0.9)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+        <!-- Browser chrome -->
+        <rect x="20" y="20" width="240" height="32" rx="14" fill="rgba(255,255,255,0.05)"/>
+        <rect x="20" y="36" width="240" height="16" fill="rgba(255,255,255,0.05)"/>
+        <circle cx="38" cy="36" r="5" fill="#FF5F57"/>
+        <circle cx="54" cy="36" r="5" fill="#FFBD2E"/>
+        <circle cx="70" cy="36" r="5" fill="#28CA41"/>
+        <rect x="88" y="29" width="120" height="14" rx="7" fill="rgba(255,255,255,0.06)"/>
+        <text x="148" y="39" text-anchor="middle" font-size="8" fill="#3A4560" font-family="monospace">agwbusiness.ai</text>
+        <!-- Page content mockup -->
+        <rect x="32" y="62" width="216" height="24" rx="6" fill="url(#g4)" opacity="0.7"/>
+        <text x="140" y="79" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">Automate Your Business</text>
+        <rect x="52" y="94" width="80" height="10" rx="4" fill="rgba(255,255,255,0.06)"/>
+        <rect x="140" y="94" width="60" height="10" rx="4" fill="rgba(255,255,255,0.04)"/>
+        <rect x="32" y="112" width="100" height="60" rx="8" fill="rgba(0,113,227,0.08)" stroke="rgba(0,113,227,0.2)" stroke-width="1"/>
+        <text x="82" y="138" text-anchor="middle" font-size="18" fill="#fff">⚡</text>
+        <text x="82" y="155" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">AI Workflows</text>
+        <rect x="144" y="112" width="100" height="60" rx="8" fill="rgba(123,47,255,0.08)" stroke="rgba(123,47,255,0.2)" stroke-width="1"/>
+        <text x="194" y="138" text-anchor="middle" font-size="18" fill="#fff">🤖</text>
+        <text x="194" y="155" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">GPT Bots</text>
+        <rect x="32" y="180" width="212" height="20" rx="8" fill="rgba(0,113,227,0.25)"/>
+        <text x="138" y="194" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">Book a Free Consultation →</text>
+        <!-- Floating chat widget -->
+        <circle cx="240" cy="198" r="14" fill="#0071e3" filter="url(#glow2)">
+          <animate attributeName="r" values="14;16;14" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <text x="240" y="203" text-anchor="middle" font-size="14" fill="#fff">💬</text>
+        <!-- Lead capture popup -->
+        <rect x="270" y="50" width="80" height="120" rx="10" fill="rgba(7,11,24,0.95)" stroke="rgba(0,113,227,0.4)" stroke-width="1.5">
+          <animate attributeName="opacity" values="0;0;1;1;1;0" dur="5s" repeatCount="indefinite"/>
+        </rect>
+        <text x="310" y="70" text-anchor="middle" font-size="8" font-weight="700" fill="#00CFFF" font-family="Outfit,sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;1;0" dur="5s" repeatCount="indefinite"/>
+          AI LEAD CAPTURE
+        </text>
+        <rect x="278" y="78" width="64" height="12" rx="6" fill="rgba(255,255,255,0.06)"/>
+        <text x="310" y="88" text-anchor="middle" font-size="7" fill="#3A4560" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;1;0" dur="5s" repeatCount="indefinite"/>
+          Your email...
+        </text>
+        <rect x="278" y="100" width="64" height="12" rx="6" fill="rgba(255,255,255,0.06)"/>
+        <text x="310" y="110" text-anchor="middle" font-size="7" fill="#3A4560" font-family="sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;1;0" dur="5s" repeatCount="indefinite"/>
+          Company name...
+        </text>
+        <rect x="278" y="124" width="64" height="18" rx="9" fill="#0071e3"/>
+        <text x="310" y="137" text-anchor="middle" font-size="8" font-weight="700" fill="#fff" font-family="Outfit,sans-serif">
+          <animate attributeName="opacity" values="0;0;1;1;1;0" dur="5s" repeatCount="indefinite"/>
+          GET STARTED
+        </text>
+        <!-- Conversion badge -->
+        <rect x="270" y="230" width="80" height="56" rx="10" fill="rgba(40,202,65,0.08)" stroke="rgba(40,202,65,0.25)" stroke-width="1"/>
+        <text x="310" y="254" text-anchor="middle" font-size="18" font-weight="800" fill="#28CA41" font-family="Outfit,sans-serif">4.8×</text>
+        <text x="310" y="268" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">Conversion</text>
+        <text x="310" y="279" text-anchor="middle" font-size="8" fill="#3A4560" font-family="sans-serif">vs standard</text>
+        <!-- Analytics bar chart mini -->
+        <text x="20" y="228" font-size="9" fill="#7B88A8" font-family="sans-serif">Weekly leads captured</text>
+        <rect x="20" y="236" width="20" height="40" rx="3" fill="rgba(0,113,227,0.3)"/>
+        <rect x="46" y="228" width="20" height="48" rx="3" fill="rgba(0,113,227,0.4)"/>
+        <rect x="72" y="218" width="20" height="58" rx="3" fill="rgba(0,113,227,0.55)"/>
+        <rect x="98" y="208" width="20" height="68" rx="3" fill="rgba(0,113,227,0.7)"/>
+        <rect x="124" y="196" width="20" height="80" rx="3" fill="url(#g4)"/>
+        <text x="134" y="193" text-anchor="middle" font-size="8" fill="#00CFFF" font-family="sans-serif">↑ 4.8×</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Business Automation Systems -->
+  <div class="service-detail" style="border-bottom:none;">
+    <div>
+      <div class="sd-label">Service 05</div>
+      <h2 class="sd-title">Business Automation<br><span class="text-gradient">Systems</span></h2>
+      <p class="sd-desc">Full-stack business automation that connects every tool in your tech stack. We map your entire operation, identify every manual process, and build a unified AI-powered system that runs it all.</p>
+      <div class="sd-benefits">
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Complete tech stack audit and integration strategy</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Custom dashboards with real-time operational visibility</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Cross-department automation with role-based access</div></div>
+        <div class="sd-benefit"><div class="sd-benefit-check">✓</div><div class="sd-benefit-text">Ongoing optimization and support included</div></div>
+      </div>
+      <div class="sd-use-cases">
+        <h4>Example Use Cases</h4>
+        <div class="sd-tags">
+          <span class="sd-tag">Full Operations Automation</span>
+          <span class="sd-tag">HR Workflows</span>
+          <span class="sd-tag">Finance Automation</span>
+          <span class="sd-tag">Marketing Ops</span>
+        </div>
+      </div>
+    </div>
+    <div class="sd-visual sd-anim-wrap">
+      <svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" class="sd-anim-svg">
+        <defs>
+          <linearGradient id="g5a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0071e3"/><stop offset="100%" stop-color="#7B2FFF"/></linearGradient>
+          <filter id="glow5"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(0,113,227,0.5)"/></marker>
+        </defs>
+        <!-- Central hub -->
+        <circle cx="180" cy="155" r="34" fill="rgba(7,11,24,0.95)" stroke="url(#g5a)" stroke-width="2.5" filter="url(#glow5)"/>
+        <circle cx="180" cy="155" r="44" fill="none" stroke="rgba(0,113,227,0.12)" stroke-width="1" stroke-dasharray="5 5">
+          <animateTransform attributeName="transform" type="rotate" from="0 180 155" to="360 180 155" dur="20s" repeatCount="indefinite"/>
+        </circle>
+        <text x="180" y="149" text-anchor="middle" font-size="20" fill="#fff">🔗</text>
+        <text x="180" y="166" text-anchor="middle" font-size="8" font-weight="700" fill="#1a8aff" font-family="Outfit,sans-serif" letter-spacing="1">AGW HUB</text>
+        <!-- Tool nodes -->
+        <!-- CRM top-left -->
+        <rect x="18" y="24" width="76" height="48" rx="10" fill="rgba(0,113,227,0.1)" stroke="rgba(0,113,227,0.3)" stroke-width="1.5"/>
+        <text x="56" y="44" text-anchor="middle" font-size="16" fill="#fff">📋</text>
+        <text x="56" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#C0C8DC" font-family="Outfit,sans-serif">CRM</text>
+        <text x="56" y="67" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">Salesforce</text>
+        <line x1="94" y1="60" x2="148" y2="128" stroke="rgba(0,113,227,0.4)" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" repeatCount="indefinite"/></line>
+        <!-- Email top-right -->
+        <rect x="266" y="24" width="76" height="48" rx="10" fill="rgba(0,113,227,0.1)" stroke="rgba(0,113,227,0.3)" stroke-width="1.5"/>
+        <text x="304" y="44" text-anchor="middle" font-size="16" fill="#fff">📧</text>
+        <text x="304" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#C0C8DC" font-family="Outfit,sans-serif">Email</text>
+        <text x="304" y="67" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">Gmail / Outlook</text>
+        <line x1="266" y1="60" x2="212" y2="128" stroke="rgba(0,113,227,0.4)" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" begin="0.3s" repeatCount="indefinite"/></line>
+        <!-- Slack left -->
+        <rect x="18" y="130" width="76" height="48" rx="10" fill="rgba(123,47,255,0.1)" stroke="rgba(123,47,255,0.3)" stroke-width="1.5"/>
+        <text x="56" y="150" text-anchor="middle" font-size="16" fill="#fff">💬</text>
+        <text x="56" y="163" text-anchor="middle" font-size="9" font-weight="600" fill="#C0C8DC" font-family="Outfit,sans-serif">Slack</text>
+        <text x="56" y="173" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">Notifications</text>
+        <line x1="94" y1="155" x2="146" y2="155" stroke="rgba(123,47,255,0.4)" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" begin="0.6s" repeatCount="indefinite"/></line>
+        <!-- Finance right -->
+        <rect x="266" y="130" width="76" height="48" rx="10" fill="rgba(123,47,255,0.1)" stroke="rgba(123,47,255,0.3)" stroke-width="1.5"/>
+        <text x="304" y="150" text-anchor="middle" font-size="16" fill="#fff">💰</text>
+        <text x="304" y="163" text-anchor="middle" font-size="9" font-weight="600" fill="#C0C8DC" font-family="Outfit,sans-serif">Finance</text>
+        <text x="304" y="173" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">QuickBooks</text>
+        <line x1="266" y1="155" x2="214" y2="155" stroke="rgba(123,47,255,0.4)" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" begin="0.9s" repeatCount="indefinite"/></line>
+        <!-- DB bottom-left -->
+        <rect x="18" y="236" width="76" height="48" rx="10" fill="rgba(0,207,255,0.07)" stroke="rgba(0,207,255,0.25)" stroke-width="1.5"/>
+        <text x="56" y="256" text-anchor="middle" font-size="16" fill="#fff">🗄️</text>
+        <text x="56" y="269" text-anchor="middle" font-size="9" font-weight="600" fill="#C0C8DC" font-family="Outfit,sans-serif">Database</text>
+        <text x="56" y="279" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">Postgres / Airtable</text>
+        <line x1="94" y1="250" x2="148" y2="182" stroke="rgba(0,207,255,0.3)" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" begin="1.2s" repeatCount="indefinite"/></line>
+        <!-- Analytics bottom-right -->
+        <rect x="266" y="236" width="76" height="48" rx="10" fill="rgba(0,207,255,0.07)" stroke="rgba(0,207,255,0.25)" stroke-width="1.5"/>
+        <text x="304" y="256" text-anchor="middle" font-size="16" fill="#fff">📊</text>
+        <text x="304" y="269" text-anchor="middle" font-size="9" font-weight="600" fill="#C0C8DC" font-family="Outfit,sans-serif">Analytics</text>
+        <text x="304" y="279" text-anchor="middle" font-size="8" fill="#7B88A8" font-family="sans-serif">Looker / GA4</text>
+        <line x1="266" y1="250" x2="212" y2="182" stroke="rgba(0,207,255,0.3)" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5 3"><animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1.5s" begin="1.5s" repeatCount="indefinite"/></line>
+        <!-- Pulse in center -->
+        <circle cx="180" cy="155" r="50" fill="none" stroke="rgba(0,113,227,0.15)" stroke-width="1">
+          <animate attributeName="r" values="34;58;34" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="cta" style="background:var(--dark-2);padding:100px 5%;">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="section-tag" style="margin:0 auto 20px">Get Started</div>
+    <h2 class="section-title">Ready to Automate<br><span class="text-gradient">Your Business?</span></h2>
+    <p class="section-sub">Let's find the best automation solution for your specific needs.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-primary" onclick="showPage('contact'); return false;">Book Free Consultation →</a>
+    </div>
+  </div>
+</section>
+</div><!-- end page-services -->
+
+<!-- ============================================================ -->
+<!--                       ABOUT PAGE                            -->
+<!-- ============================================================ -->
+<div id="page-about" class="page">
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <div class="section-tag">About AGW</div>
+    <h1 class="section-title">We're Building the<br><span class="text-gradient">AI-First Business Future</span></h1>
+    <p class="section-sub" style="margin:16px auto 0;">AGW exists to make powerful AI automation accessible to every ambitious business — not just the Fortune 500.</p>
+  </div>
+</section>
+
+<section class="about-mission">
+  <div class="about-mission-inner">
+    <div>
+      <div class="section-tag">Our Mission</div>
+      <h2 class="section-title">Empowering Businesses to<br><span class="text-gradient">Do More with Less</span></h2>
+      <p style="font-size:15px;color:var(--gray-2);line-height:1.8;margin-top:20px;">We started AGW because we saw a massive gap: businesses were drowning in manual work while AI technology that could solve it all was sitting unused — too complex, too expensive, or too disconnected from real business needs.</p>
+      <p style="font-size:15px;color:var(--gray-2);line-height:1.8;margin-top:16px;">Our mission is simple: bridge that gap. We translate the power of AI into practical, profitable automation systems that any business can deploy — and measure the results from day one.</p>
+    </div>
+    <div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:24px;">
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,113,227,0.12);border:1px solid rgba(0,113,227,0.25);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🎯</div>
+          <div><h3 style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">Our Mission</h3><p style="font-size:13px;color:var(--gray-3);line-height:1.7;">Make AI automation practical, profitable, and accessible for every business that wants to grow.</p></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(123,47,255,0.12);border:1px solid rgba(123,47,255,0.25);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👁️</div>
+          <div><h3 style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">Our Vision</h3><p style="font-size:13px;color:var(--gray-3);line-height:1.7;">A world where every business runs on AI — where human talent is freed to focus on creativity, strategy, and growth.</p></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(0,207,255,0.08);border:1px solid rgba(0,207,255,0.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💡</div>
+          <div><h3 style="font-family:var(--font-h);font-size:16px;font-weight:700;margin-bottom:6px;">Why We Built AGW</h3><p style="font-size:13px;color:var(--gray-3);line-height:1.7;">We've seen businesses lose thousands of hours to tasks AI can do in seconds. We built AGW to change that permanently.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-values">
+  <div class="about-values-inner">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="section-tag">What Drives Us</div>
+      <h2 class="section-title">Our Core <span class="text-gradient">Values</span></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card"><div class="value-icon">🔬</div><h3>Results First</h3><p>We measure success in real business outcomes — hours saved, revenue increased, costs reduced. Not vanity metrics.</p></div>
+      <div class="value-card"><div class="value-icon">🤝</div><h3>True Partnership</h3><p>We become embedded in your business. Your success is our success. We're not vendors — we're your AI team.</p></div>
+      <div class="value-card"><div class="value-icon">🔓</div><h3>Full Transparency</h3><p>You own everything we build. No black boxes, no lock-in. We document everything and train your team.</p></div>
+      <div class="value-card"><div class="value-icon">⚡</div><h3>Speed & Quality</h3><p>We move fast without cutting corners. Most systems go live within 2–4 weeks and perform from day one.</p></div>
+      <div class="value-card"><div class="value-icon">🔄</div><h3>Continuous Improvement</h3><p>AI systems get smarter over time. We continuously optimize, monitor, and improve what we build for you.</p></div>
+      <div class="value-card"><div class="value-icon">🛡️</div><h3>Security & Trust</h3><p>Your data stays yours. We implement enterprise-grade security and data governance in every system we build.</p></div>
+    </div>
+  </div>
+</section>
+</div><!-- end page-about -->
+
+<!-- ============================================================ -->
+<!--                        TEAM PAGE                            -->
+<!-- ============================================================ -->
+<div id="page-team" class="page">
+<section class="team-hero">
+  <div style="max-width:600px;margin:0 auto;">
+    <div class="section-tag">Meet the Team</div>
+    <h1 class="section-title">The Team<br><span class="text-gradient">Behind AGW</span></h1>
+    <p class="section-sub" style="margin:16px auto 0;">A team of builders, strategists, and AI specialists obsessed with automating businesses the right way.</p>
+  </div>
+</section>
+
+<section class="team-section">
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,var(--blue),var(--purple))" onclick="triggerTeamPhoto(this)">
+        <span class="team-avatar-initials">AK</span>
+        <img class="team-avatar-img" src="" alt="" style="display:none;">
+        <div class="team-avatar-overlay">📷</div>
+        <input type="file" class="team-photo-input" accept="image/*" onchange="loadTeamPhoto(event,this)">
+      </div>
+      <div class="team-name">Adam Khalid</div>
+      <div class="team-role">Founder & CEO</div>
+      <p class="team-bio">Visionary behind AGW with 10+ years building AI systems for enterprise businesses. Passionate about making automation accessible to all.</p>
+      <div class="team-expertise">
+        <span class="team-tag">AI Strategy</span>
+        <span class="team-tag">Business Development</span>
+        <span class="team-tag">LLMs</span>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,var(--purple),var(--neon))" onclick="triggerTeamPhoto(this)">
+        <span class="team-avatar-initials">MR</span>
+        <img class="team-avatar-img" src="" alt="" style="display:none;">
+        <div class="team-avatar-overlay">📷</div>
+        <input type="file" class="team-photo-input" accept="image/*" onchange="loadTeamPhoto(event,this)">
+      </div>
+      <div class="team-name">Maya Reeves</div>
+      <div class="team-role">Lead AI Engineer</div>
+      <p class="team-bio">Specialist in building and deploying production-grade AI systems. Expert in LLM fine-tuning, RAG pipelines, and intelligent agent design.</p>
+      <div class="team-expertise">
+        <span class="team-tag">GPT Fine-tuning</span>
+        <span class="team-tag">Python / APIs</span>
+        <span class="team-tag">RAG Systems</span>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,var(--blue-dark),var(--blue-light))" onclick="triggerTeamPhoto(this)">
+        <span class="team-avatar-initials">JS</span>
+        <img class="team-avatar-img" src="" alt="" style="display:none;">
+        <div class="team-avatar-overlay">📷</div>
+        <input type="file" class="team-photo-input" accept="image/*" onchange="loadTeamPhoto(event,this)">
+      </div>
+      <div class="team-name">Jordan Silva</div>
+      <div class="team-role">Workflow Architect</div>
+      <p class="team-bio">Maps complex business processes and designs automation blueprints. Expert in n8n, Zapier, Make.com, and custom API integrations.</p>
+      <div class="team-expertise">
+        <span class="team-tag">Process Design</span>
+        <span class="team-tag">n8n / Make</span>
+        <span class="team-tag">API Integration</span>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#0057b3,var(--neon))" onclick="triggerTeamPhoto(this)">
+        <span class="team-avatar-initials">PC</span>
+        <img class="team-avatar-img" src="" alt="" style="display:none;">
+        <div class="team-avatar-overlay">📷</div>
+        <input type="file" class="team-photo-input" accept="image/*" onchange="loadTeamPhoto(event,this)">
+      </div>
+      <div class="team-name">Priya Chen</div>
+      <div class="team-role">Web Developer</div>
+      <p class="team-bio">Builds high-performance, AI-integrated websites and web apps. Passionate about creating digital experiences that convert and perform.</p>
+      <div class="team-expertise">
+        <span class="team-tag">React / Next.js</span>
+        <span class="team-tag">UI/UX Design</span>
+        <span class="team-tag">Conversion Optimization</span>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- end page-team -->
+
+<!-- ============================================================ -->
+<!--                     CASE STUDIES PAGE                       -->
+<!-- ============================================================ -->
+<div id="page-cases" class="page">
+<section class="cases-hero">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="section-tag">Case Studies</div>
+    <h1 class="section-title">Real Results from<br><span class="text-gradient">Real Businesses</span></h1>
+    <p class="section-sub" style="margin:16px auto 0;">Explore how we've transformed operations, saved thousands of hours, and driven revenue growth through AI automation.</p>
+  </div>
+</section>
+
+<section class="cases-section">
+  <div class="cases-grid">
+    <div class="case-card">
+      <div>
+        <div class="case-num">Case Study 01 · Customer Support</div>
+        <h2 class="case-title">AI-Powered Customer Support System Reduces Response Time by 90%</h2>
+        <p class="case-desc">A fast-growing e-commerce brand was drowning in support tickets. Their 8-person team struggled to keep up with 2,000+ weekly queries. We built a custom AI support system that handles 85% of tickets automatically — with context, empathy, and accuracy.</p>
+        <div class="case-tags">
+          <span class="case-tag">GPT Automation</span>
+          <span class="case-tag">CRM Integration</span>
+          <span class="case-tag">E-commerce</span>
+          <span class="case-tag">4-week delivery</span>
+        </div>
+      </div>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="case-metric-num">90%</div><div class="case-metric-label">Faster response time</div></div>
+        <div class="case-metric"><div class="case-metric-num">85%</div><div class="case-metric-label">Tickets resolved by AI</div></div>
+        <div class="case-metric"><div class="case-metric-num">$48K</div><div class="case-metric-label">Annual cost savings</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-num">Case Study 02 · Operations Automation</div>
+        <h2 class="case-title">AI Workflow Automation Saves 300+ Hours Monthly for SaaS Company</h2>
+        <p class="case-desc">A B2B SaaS company had 14 disconnected tools and 6 manual handoffs between sales, ops, and finance. We built a unified AI workflow that connects everything — from lead creation to invoicing — running completely on autopilot.</p>
+        <div class="case-tags">
+          <span class="case-tag">Workflow Automation</span>
+          <span class="case-tag">SaaS</span>
+          <span class="case-tag">CRM + Billing</span>
+          <span class="case-tag">3-week delivery</span>
+        </div>
+      </div>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="case-metric-num">300+</div><div class="case-metric-label">Hours saved monthly</div></div>
+        <div class="case-metric"><div class="case-metric-num">14→1</div><div class="case-metric-label">Tools unified</div></div>
+        <div class="case-metric"><div class="case-metric-num">60%</div><div class="case-metric-label">Ops cost reduction</div></div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div>
+        <div class="case-num">Case Study 03 · AI Sales Assistant</div>
+        <h2 class="case-title">AI Sales Assistant Increases Qualified Leads by 40% in 90 Days</h2>
+        <p class="case-desc">A professional services firm was manually qualifying leads via email — slow, inconsistent, and losing hot prospects. We deployed an AI sales assistant that scores, qualifies, and nurtures leads 24/7, delivering only ready-to-close prospects to the sales team.</p>
+        <div class="case-tags">
+          <span class="case-tag">GPT Sales Assistant</span>
+          <span class="case-tag">Lead Qualification</span>
+          <span class="case-tag">Professional Services</span>
+          <span class="case-tag">2-week delivery</span>
+        </div>
+      </div>
+      <div class="case-metrics">
+        <div class="case-metric"><div class="case-metric-num">40%</div><div class="case-metric-label">More qualified leads</div></div>
+        <div class="case-metric"><div class="case-metric-num">5×</div><div class="case-metric-label">Faster qualification</div></div>
+        <div class="case-metric"><div class="case-metric-num">$120K</div><div class="case-metric-label">New revenue in Q1</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--dark-2);padding:100px 5%;text-align:center;">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <div class="section-tag" style="margin:0 auto 20px">Your Results Next</div>
+    <h2 class="section-title">Want Results Like<br><span class="text-gradient">These?</span></h2>
+    <p class="section-sub">Every case study started with a free consultation call. Yours can too.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-primary" onclick="showPage('contact'); return false;">Get Your Free AI Audit →</a>
+    </div>
+  </div>
+</section>
+</div><!-- end page-cases -->
+
+<!-- ============================================================ -->
+<!--                      CONTACT PAGE                           -->
+<!-- ============================================================ -->
+<div id="page-contact" class="page">
+<section class="contact-page-hero">
+  <div style="max-width:600px;margin:0 auto;">
+    <div class="section-tag">Get in Touch</div>
+    <h1 class="section-title">Get Your<br><span class="text-gradient">AI Automation Plan</span></h1>
+    <p class="section-sub" style="margin:16px auto 0;">Tell us about your business and we'll build a custom AI automation roadmap — completely free, no obligation.</p>
+  </div>
+</section>
+
+<section style="background:var(--dark-3);padding:80px 5%;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-300px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(0,113,227,0.12) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="contact-inner" style="max-width:1100px;margin:0 auto;">
+    <div class="contact-info">
+      <div class="section-tag">Start Today</div>
+      <h2 class="section-title">Ready to Automate<br>Your <span class="text-gradient">Business?</span></h2>
+      <p class="section-sub">Book a free 30-minute strategy call. We'll analyze your workflow and show you exactly how AI can transform your operations.</p>
+      <div class="contact-perks">
+        <div class="contact-perk">
+          <div class="contact-perk-icon">🎯</div>
+          <div class="contact-perk-text">
+            <strong>Free Automation Audit</strong>
+            We map your current processes and identify quick wins
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">🗺️</div>
+          <div class="contact-perk-text">
+            <strong>Custom AI Roadmap</strong>
+            You get a tailored automation plan for your exact business needs
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">⚡</div>
+          <div class="contact-perk-text">
+            <strong>Fast Implementation</strong>
+            Most systems go live within 2–4 weeks of engagement
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">🔒</div>
+          <div class="contact-perk-text">
+            <strong>No Lock-In, Ever</strong>
+            You own everything we build — full transparency always
+          </div>
+        </div>
+        <div class="contact-perk">
+          <div class="contact-perk-icon">💬</div>
+          <div class="contact-perk-text">
+            <strong>24-Hour Response</strong>
+            We respond to every inquiry within one business day
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <div class="contact-form-title">Your AI Automation Plan Request</div>
+      <div class="form-row">
+        <div class="form-group"><label>Full Name *</label><input type="text" placeholder="John Smith"></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" placeholder="john@company.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Company Name *</label><input type="text" placeholder="Acme Corp"></div>
+        <div class="form-group"><label>Industry *</label>
+          <select>
+            <option value="">Select industry...</option>
+            <option>E-commerce</option>
+            <option>SaaS / Tech</option>
+            <option>Healthcare</option>
+            <option>Finance</option>
+            <option>Real Estate</option>
+            <option>Marketing Agency</option>
+            <option>Manufacturing</option>
+            <option>Legal</option>
+            <option>Education</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Team Size</label>
+          <select>
+            <option value="">Select team size...</option>
+            <option>1–10 employees</option>
+            <option>11–50 employees</option>
+            <option>51–200 employees</option>
+            <option>201–500 employees</option>
+            <option>500+ employees</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Budget Range</label>
+          <select>
+            <option value="">Select budget range...</option>
+            <option>Under $2,000</option>
+            <option>$2,000 – $5,000</option>
+            <option>$5,000 – $15,000</option>
+            <option>$15,000 – $50,000</option>
+            <option>$50,000+</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>What automation do you need? *</label>
+        <select>
+          <option value="">Select primary need...</option>
+          <option>AI Workflow Automation</option>
+          <option>GPT / Chatbot Automation</option>
+          <option>AI Customer Support</option>
+          <option>Website Development</option>
+          <option>Full Business Automation</option>
+          <option>Not sure — need advice</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Describe your current pain points or automation goals *</label>
+        <textarea placeholder="Tell us about the manual processes slowing you down, what you'd like AI to handle, and what success looks like for your business..."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit(event)">Get Your AI Automation Plan →</button>
+      <p class="form-note">🔒 Your information is private. We respond within 24 hours with a tailored plan.</p>
+    </div>
+  </div>
+</section>
+</div><!-- end page-contact -->
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" onclick="showPage('home')">
+          <div class="nav-logo-icon" onclick="triggerIconUpload(event)" title="Click to upload your logo icon">
+            <svg id="footer-default-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;">
+              <path d="M12 3L4 8.5V17L12 21L20 17V8.5L12 3Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M12 3L12 21M4 8.5L20 8.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M8 6L12 9L16 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <img id="footer-custom-icon" src="" alt="Logo" style="display:none;width:42px;height:42px;object-fit:cover;border-radius:6px;">
+            <div class="icon-upload-overlay">📷</div>
+          </div>
+          <div class="nav-logo-text">AGW <span>AUTOMATION</span></div>
+        </a>
+        <p>Helping businesses automate repetitive work, improve efficiency, and scale faster using AI.</p>
+        <div class="footer-social">
+          <a href="#" title="LinkedIn">in</a>
+          <a href="#" title="Twitter">𝕏</a>
+          <a href="#" title="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('services')">AI Workflows</a></li>
+          <li><a href="#" onclick="showPage('services')">GPT Automations</a></li>
+          <li><a href="#" onclick="showPage('services')">Customer Support AI</a></li>
+          <li><a href="#" onclick="showPage('services')">Smart Websites</a></li>
+          <li><a href="#" onclick="showPage('services')">Business Automation</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('about')">About AGW</a></li>
+          <li><a href="#" onclick="showPage('team')">Our Team</a></li>
+          <li><a href="#" onclick="showPage('cases')">Case Studies</a></li>
+          <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get Started</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('contact')">Free Consultation</a></li>
+          <li><a href="#" onclick="showPage('contact')">AI Audit</a></li>
+          <li><a href="#" onclick="showPage('cases')">Success Stories</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 AGW. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Team photo upload
+function triggerTeamPhoto(avatarEl) {
+  avatarEl.querySelector('.team-photo-input').click();
+}
+function loadTeamPhoto(e, inputEl) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  const avatar = inputEl.closest('.team-avatar');
+  reader.onload = function(ev) {
+    const img = avatar.querySelector('.team-avatar-img');
+    const initials = avatar.querySelector('.team-avatar-initials');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    if (initials) initials.style.display = 'none';
+    avatar.style.background = 'transparent';
+  };
+  reader.readAsDataURL(file);
+}
+
+// Icon upload
+function triggerIconUpload(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById('icon-file-input').click();
+}
+
+function handleIconUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const src = ev.target.result;
+    // Update nav icon
+    const navDefault = document.getElementById('nav-default-icon');
+    const navCustom = document.getElementById('nav-custom-icon');
+    if (navDefault) navDefault.style.display = 'none';
+    if (navCustom) { navCustom.src = src; navCustom.style.display = 'block'; }
+    // Update footer icon
+    const footerDefault = document.getElementById('footer-default-icon');
+    const footerCustom = document.getElementById('footer-custom-icon');
+    if (footerDefault) footerDefault.style.display = 'none';
+    if (footerCustom) { footerCustom.src = src; footerCustom.style.display = 'block'; }
+  };
+  reader.readAsDataURL(file);
+}
+
+// Page navigation
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => { p.style.display = 'none'; p.classList.remove('active'); });
+  const target = document.getElementById('page-' + page);
+  if (target) { target.style.display = 'block'; target.classList.add('active'); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Sticky nav
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Counter animation
+function animateCounters() {
+  const counters = document.querySelectorAll('.metric-num[data-target]');
+  counters.forEach(counter => {
+    const target = parseInt(counter.dataset.target);
+    const suffix = counter.dataset.suffix || '%';
+    let current = 0;
+    const increment = target / 60;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      counter.textContent = Math.floor(current) + suffix;
+    }, 25);
+  });
+}
+
+// Intersection Observer for counters
+const metricsSection = document.getElementById('metrics');
+if (metricsSection) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { animateCounters(); observer.disconnect(); }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(metricsSection);
+}
+
+// Workflow animation loop
+function cycleWorkflow() {
+  const nodes = document.querySelectorAll('.wf-node');
+  if (!nodes.length) return;
+  let activeIndex = 2;
+  setInterval(() => {
+    nodes.forEach((n, i) => {
+      n.classList.remove('active', 'done');
+      if (i < activeIndex) {
+        n.classList.add('done');
+        n.querySelector('.wf-status').className = 'wf-status status-done';
+        n.querySelector('.wf-status').textContent = '✓ Done';
+      } else if (i === activeIndex) {
+        n.classList.add('active');
+        n.querySelector('.wf-status').className = 'wf-status status-active';
+        n.querySelector('.wf-status').textContent = '● Running';
+      } else {
+        n.querySelector('.wf-status').className = 'wf-status status-wait';
+        n.querySelector('.wf-status').textContent = 'Queued';
+      }
+    });
+    activeIndex = (activeIndex + 1) % nodes.length;
+    if (activeIndex === 0) { nodes.forEach(n => { n.classList.remove('active','done'); n.querySelector('.wf-status').className='wf-status status-wait'; n.querySelector('.wf-status').textContent='Queued'; }); }
+  }, 2200);
+}
+cycleWorkflow();
+
+// Form submit
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target;
+  btn.textContent = '✓ Submitted! We\'ll be in touch within 24 hours.';
+  btn.style.background = '#28CA41';
+  btn.disabled = true;
+}
+
+// Mobile menu
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  if (links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(7,11,24,0.98);padding:20px 5%;border-bottom:1px solid rgba(255,255,255,0.08);gap:16px;';
+  }
+}
+
+// Animate on scroll
+const animElements = document.querySelectorAll('.service-card, .problem-card, .metric-card, .test-card, .team-card, .case-card');
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'wfSlide 0.5s cubic-bezier(0.4,0,0.2,1) both';
+      scrollObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+animElements.forEach(el => scrollObserver.observe(el));
+</script>
+
+</body>
+</html>
